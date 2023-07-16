@@ -30,7 +30,7 @@ const actionUsersController = {
         try {
             console.log(req.body)
             const { name, lastname, nameac, idtype, idstate, email, email_verified_at, password, remember_token } = req.body;
-            const [rows] = await pool.query('INSERT INTO users (name, lastname, nameac, idtype, idstate, email, email_verified_at, password, remember_token) VALUES (?,?,?,?,?,?,?,?,?)',
+            const [rows] = await pool.query('INSERT INTO users (name, lastname, nameac, idtype, idstate, email, email_verified_at, password, remember_token) VALUES (?,?,?,?,?,?,?,?,?)', 
                 [name, lastname, nameac, idtype, idstate, email, email_verified_at, password, remember_token]);
             res.send({ rows });
         } catch (error) {
