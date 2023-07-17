@@ -4,7 +4,7 @@ const actionJobsController = {
     //metod INDEX
     getJobs: async (req, res) => {
         try {
-            const [rows] = (await pool.query('SELECT * FROM jobs'));
+            const [rows] = (await pool.query('SELECT jobs.id, jobs.title, jobs.detail, jobs.date, jobs.price, jobs.idtype, jobs.iduser, jobs.idstate, jobs.created_at, jobs.updated_at, job_types.name as type, users.name as name, users.lastname, states.name as state   FROM jobs inner join job_types on job_types.id = jobs.idtype inner join users on users.id = jobs.iduser inner join states on states.id = jobs.idstate'));
             res.send(rows);
         } catch (error) {
             return res.status(500).json({
@@ -16,7 +16,7 @@ const actionJobsController = {
 
     getOneJob: async (req, res) => {
         try {
-            const [rows] = (await pool.query(('SELECT * FROM jobs WHERE id = ?'), [req.params.id]));
+            const [rows] = (await pool.query(('SELECT jobs.id, jobs.title, jobs.detail, jobs.date, jobs.price, jobs.idtype, jobs.iduser, jobs.idstate, jobs.created_at, jobs.updated_at, job_types.name as type, users.name as name, users.lastname, states.name as state   FROM jobs inner join job_types on job_types.id = jobs.idtype inner join users on users.id = jobs.iduser inner join states on states.id = jobs.idstate WHERE jobs.id = ?'), [req.params.id]));
             res.send(rows);
         } catch (error) {
             return res.status(500).json({
