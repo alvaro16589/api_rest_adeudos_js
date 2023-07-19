@@ -17,9 +17,10 @@ const actionUsersController = {
 
     getOneUser: async (req, res) => {
         try {
-            const [rows] = (await pool.query(('SELECT users.id, users.name, users.lastname, users.nameac, users.idtype, users.idstate, users.email, users.email_verified_at, users.password, users.remember_token, users.created_at, users.updated_at, type_users.name AS type, states.name AS state FROM users INNER JOIN type_users ON users.idtype = type_users.id INNER JOIN states on users.idstate = states.id WHERE users.id = ?'), [req.params.id]));
+            const [rows] = (await pool.query(('SELECT users.id, users.name, users.lastname, users.nameac, users.idtype, users.idstate, users.email, users.email_verified_at, users.remember_token, users.created_at, users.updated_at, type_users.name AS type, states.name AS state FROM users INNER JOIN type_users ON users.idtype = type_users.id INNER JOIN states on users.idstate = states.id WHERE users.nameac = ? AND users.password = ?'), [req.params.nameac, req.params.password]));
             res.send(rows);
         } catch (error) {
+            console.log(error);
             return res.status(500).json({
                 message: 'Something wrong on server'
             })
